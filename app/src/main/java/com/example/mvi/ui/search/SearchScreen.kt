@@ -1,4 +1,4 @@
-package com.example.mvi.ui.theme.BookScreen
+package com.example.mvi.ui.search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -7,12 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.mvi.ui.theme.BookIntent
-import com.example.mvi.ui.theme.BookViewModel
+import com.example.mvi.ui.BookListComponent
+import com.example.mvi.ui.SearchBarComponent
+import com.example.mvi.ui.theme.PinkColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController, viewModel: BookViewModel) {
+fun SearchScreen(navController: NavHostController, viewModel: SearchViewModel) {
     val uiState by viewModel.state
 
     Scaffold(
@@ -36,8 +37,8 @@ fun SearchScreen(navController: NavHostController, viewModel: BookViewModel) {
         ) {
             SearchBarComponent(
                 query = uiState.searchText,
-                onQueryChange = { viewModel.handleIntent(BookIntent.EnterText(it)) },
-                onSearchClick = { viewModel.handleIntent(BookIntent.SearchClicked) }
+                onQueryChange = { viewModel.handleIntent(SearchIntent.EnterText(it)) },
+                onSearchClick = { viewModel.handleIntent(SearchIntent.SearchClicked) }
             )
 
             BookListComponent(

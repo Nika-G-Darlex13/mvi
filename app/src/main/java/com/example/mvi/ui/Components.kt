@@ -1,5 +1,4 @@
-package com.example.mvi.ui.theme.BookScreen
-
+package com.example.mvi.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,13 +6,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.mvi.ui.theme.Book
-
-val PinkColor = Color(0xFFE91E63)
+import com.example.mvi.domain.Book
+import com.example.mvi.ui.theme.PinkColor
 
 @Composable
 fun SearchBarComponent(

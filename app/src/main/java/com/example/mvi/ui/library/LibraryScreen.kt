@@ -1,4 +1,4 @@
-package com.example.mvi.ui.theme.BookScreen
+package com.example.mvi.ui.library
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,14 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.mvi.ui.theme.BookViewModel
 import androidx.compose.material3.Button
-
+import androidx.compose.runtime.LaunchedEffect
+import com.example.mvi.ui.BookListComponent
+import com.example.mvi.ui.theme.PinkColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LibraryScreen(navController: NavHostController, viewModel: BookViewModel) {
-    val uiState by viewModel.state
+fun LibraryScreen(navController: NavHostController, viewModel: LibraryViewModel) {
+    LaunchedEffect(Unit) {
+        viewModel.handleIntent(LibraryIntent.LoadBooks)
+    }
+    val state by viewModel.state
 
     Scaffold(
         topBar = {
@@ -36,7 +40,7 @@ fun LibraryScreen(navController: NavHostController, viewModel: BookViewModel) {
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            BookListComponent(books = uiState.books)
+            BookListComponent(books = state.books)
         }
     }
 }

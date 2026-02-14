@@ -1,6 +1,5 @@
 package com.example.mvi
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,9 +8,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mvi.ui.theme.BookScreen.LibraryScreen
-import com.example.mvi.ui.theme.BookScreen.SearchScreen
-import com.example.mvi.ui.theme.BookViewModel
+import com.example.mvi.ui.library.LibraryScreen
+import com.example.mvi.ui.library.LibraryViewModel
+import com.example.mvi.ui.search.SearchScreen
+import com.example.mvi.ui.search.SearchViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,16 +20,16 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 val navController = rememberNavController()
 
-                val viewModel: BookViewModel = viewModel()
-
                 NavHost(navController = navController, startDestination = "search") {
 
                     composable("search") {
-                        SearchScreen(navController, viewModel)
+                        val searchViewModel: SearchViewModel = viewModel()
+                        SearchScreen(navController, searchViewModel)
                     }
 
                     composable("library") {
-                        LibraryScreen(navController, viewModel)
+                        val libraryViewModel: LibraryViewModel = viewModel()
+                        LibraryScreen(navController, libraryViewModel)
                     }
                 }
             }
