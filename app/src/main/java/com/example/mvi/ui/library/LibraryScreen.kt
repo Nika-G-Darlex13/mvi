@@ -8,30 +8,25 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.compose.material3.Button
-import androidx.compose.runtime.LaunchedEffect
 import com.example.mvi.ui.BookListComponent
-import com.example.mvi.ui.theme.PinkColor
+import com.example.mvi.ui.theme.Pink40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LibraryScreen(navController: NavHostController, viewModel: LibraryViewModel) {
-    LaunchedEffect(Unit) {
-        viewModel.handleIntent(LibraryIntent.LoadBooks)
-    }
-    val state by viewModel.state
-
+fun LibraryScreen(
+    state: LibraryState,
+    onAction: (LibraryIntent)-> Unit
+){
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Моя библиотека") },
                 navigationIcon = {
                     Button(
-                        onClick = { navController.popBackStack() },
-                        colors = ButtonDefaults.buttonColors(containerColor = PinkColor)
+                        onClick = { onAction(LibraryIntent.OnBackClicked) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Pink40)
                     ) {
                         Text("Назад")
                     }
@@ -43,5 +38,6 @@ fun LibraryScreen(navController: NavHostController, viewModel: LibraryViewModel)
             BookListComponent(books = state.books)
         }
     }
-}
+    }
+
 

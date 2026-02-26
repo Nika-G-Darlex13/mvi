@@ -4,7 +4,8 @@ import com.example.mvi.domain.Book
 
 class LibraryDataSource{
     fun getAllBooks(): List<Book>{
-        return listOf( Book("Преступление и наказание", "Ф. Достоевский", 450),
+        return listOf(
+            Book("Преступление и наказание", "Ф. Достоевский", 450),
             Book("Анна Каренина", "Л. Толстой", 520),
             Book("Братья Карамазовы", "Ф. Достоевский", 600),
             Book("Война и мир", "Л. Толстой", 850),

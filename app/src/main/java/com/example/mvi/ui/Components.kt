@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mvi.domain.Book
-import com.example.mvi.ui.theme.PinkColor
+import com.example.mvi.ui.theme.Pink40
 
 @Composable
 fun SearchBarComponent(
@@ -31,7 +31,7 @@ fun SearchBarComponent(
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = onSearchClick,
-            colors = ButtonDefaults.buttonColors(containerColor = PinkColor)
+            colors = ButtonDefaults.buttonColors(containerColor = Pink40)
         ) {
             Text("Найти")
         }

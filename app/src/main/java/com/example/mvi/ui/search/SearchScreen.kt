@@ -4,17 +4,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.mvi.ui.BookListComponent
 import com.example.mvi.ui.SearchBarComponent
-import com.example.mvi.ui.theme.PinkColor
+import com.example.mvi.ui.theme.Pink40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController, viewModel: SearchViewModel) {
-    val uiState by viewModel.state
+fun SearchScreen(
+    state: SearchState,
+    navController: NavHostController,
+    onAction: (SearchIntent)-> Unit
+) {
 
     Scaffold(
         topBar = {
@@ -24,7 +26,7 @@ fun SearchScreen(navController: NavHostController, viewModel: SearchViewModel) {
             Button(
                 onClick = { navController.navigate("library") },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = PinkColor)
+                colors = ButtonDefaults.buttonColors(containerColor = Pink40)
             ) {
                 Text("Библиотека")
             }
@@ -36,13 +38,13 @@ fun SearchScreen(navController: NavHostController, viewModel: SearchViewModel) {
                 .fillMaxSize()
         ) {
             SearchBarComponent(
-                query = uiState.searchText,
-                onQueryChange = { viewModel.handleIntent(SearchIntent.EnterText(it)) },
-                onSearchClick = { viewModel.handleIntent(SearchIntent.SearchClicked) }
+                query = state.searchText,
+                onQueryChange = { text->onAction(SearchIntent.OnSearchFieldInputChanged(text))},
+                onSearchClick = { onAction(SearchIntent.OnSearchClicked) }
             )
 
             BookListComponent(
-                books = uiState.books
+                books =state.books
             )
         }
     }

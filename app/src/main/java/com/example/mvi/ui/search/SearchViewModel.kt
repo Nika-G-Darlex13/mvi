@@ -3,7 +3,9 @@ package com.example.mvi.ui.search
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mvi.data.BookRepository
+import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
     private val repository = BookRepository()
@@ -12,18 +14,16 @@ class SearchViewModel : ViewModel() {
 
     fun handleIntent(intent: SearchIntent) {
         when (intent) {
-            is SearchIntent.EnterText -> {
+            is SearchIntent.OnSearchFieldInputChanged -> {
                 _state.value = _state.value.copy(searchText = intent.text)
             }
 
-            is SearchIntent.SearchClicked -> {
-                val results = repository.search(_state.value.searchText)
-                _state.value = _state.value.copy(books = results)
+            is SearchIntent.OnSearchClicked -> {
+                viewModelScope.launch {
+                    val results = repository.search(_state.value.searchText)
+                    _state.value = _state.value.copy(books = results)
+                }
             }
         }
-    }
-
-    private fun updateState(action: SearchAction) {
-        _state.value = SearchReducer.reduce(_state.value, action)
     }
 }
